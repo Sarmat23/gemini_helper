@@ -81,9 +81,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(reply_text)
 
     except Exception as e:
-        logger.error("Ошибка при обращении к Gemini: %s", e)
+        logger.error("Ошибка при обращении к Gemini: %s", e, exc_info=True)
         await update.message.reply_text(
-            "⚠️ Произошла ошибка при обращении к Gemini. Попробуйте позже."
+            f"⚠️ Ошибка: {type(e).__name__}: {e}"
         )
 
 
