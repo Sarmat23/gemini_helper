@@ -32,6 +32,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Скрываем httpx логи — они содержат Telegram токен в URL
+logging.getLogger("httpx").setLevel(logging.WARNING)
+
 logger.info("Конфигурация загружена: CHANNEL_ID=%s, MODERATOR_ID=%s, DISCUSSION_GROUP_ID=%s, DATA_DIR=%s",
             CHANNEL_ID, MODERATOR_ID, DISCUSSION_GROUP_ID, DATA_DIR)
 
@@ -39,7 +42,8 @@ logger.info("Конфигурация загружена: CHANNEL_ID=%s, MODERAT
 # Gemini
 # ---------------------------------------------------------------------------
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-2.0-flash")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
+model = genai.GenerativeModel(GEMINI_MODEL)
 
 # Хранилище истории чатов (chat_id -> список сообщений)
 chat_histories: dict[int, list] = {}
