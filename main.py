@@ -1,4 +1,4 @@
-# ver_0.0001
+# ver_0.0002
 import os
 import logging
 import traceback
@@ -17,8 +17,12 @@ GEMINI_API_KEY      = os.getenv("GEMINI_API_KEY", "")
 DISCUSSION_GROUP_ID = int(os.getenv("DISCUSSION_GROUP_ID", "0"))
 DATA_DIR            = os.getenv("DATA_DIR", "./data")
 
-# Список моделей для перебора при исчерпании квоты
-GEMINI_MODELS = ["gemini-2.0-flash-lite", "gemini-2.0-flash", "gemini-1.5-flash-latest", "gemini-1.5-flash"]
+# Список моделей для перебора при исчерпании квоты (актуально для free tier проекта)
+GEMINI_MODELS = [
+    os.getenv("GEMINI_MODEL_PRIMARY", "gemini-2.5-flash"),
+    "gemini-2.5-flash-lite",
+    "gemini-2.0-flash",
+]
 
 # ---------------------------------------------------------------------------
 # Валидация обязательных переменных
